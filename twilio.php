@@ -37,33 +37,43 @@ function send_sms($to, $message, $xml = true)
   }
 }
 
-if(substr($message, 0, 5) == 'check')
-{
-  list($command, $phone_number) = preg_split('/ /', $message);
-
-  //$caller = get_phone($phone_number);
-
-  $user = array(
-    'name' => 'Johnny',
-    'location' => '',
-    'skill' => '',
-    'econtact' => '',
-    'last_modified' => time()
-  );
-
-  if(!empty($user))
-  {
-    send_sms($caller_number, $user['name'].' last checked in at '.date('m/d/Y H:i', $user['last_modified']), true);
-  }
-  else
-  {
-     send_sms($caller_number, 'Unable to find phone number in registry.', true);   
-  }
-}
-exit;
 $caller = get_phone($caller_number);
 switch(true)
 {
+  case substr($message, 0, 8) == 'disaster':
+      $phones = get_phones();
+
+      foreach($phones as $phone)
+      {
+        send_sms($phone['phone'], 'Are you okay?', true);  
+        save_state($phone['phone'], 'No Response');          
+      }
+  break;
+  case $caller['state'] == 'No Response':
+    save_state($caller_number, $message);
+  break;
+  case substr($message, 0, 5) == 'check':
+    list($command, $phone_number) = preg_split('/ /', $message);
+
+    //$caller = get_phone($phone_number);
+
+    $user = array(
+      'name' => 'Johnny',
+      'location' => '',
+      'skill' => '',
+      'econtact' => '',
+      'last_modified' => time()
+    );
+
+    if(!empty($user))
+    {
+      send_sms($caller_number, $user['name'].' last checked in at '.date('m/d/Y H:i', $user['last_modified']), true);
+    }
+    else
+    {
+       send_sms($caller_number, 'Unable to find phone number in registry.', true);   
+    }
+  break;
   case empty($caller['location']):
     save_number($caller_number);
     save_name($caller_number, $message);
