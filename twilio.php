@@ -2,26 +2,27 @@
 <?php
 
 include_once('database.php');
-
-$twilio_number = '+';
-$AccountSid = '';
-$AuthToken = '';
-
 require "../../twilioapi/Twilio.php";
 
-file_put_contents('request.txt', json_encode($_REQUEST));
+define('TWILIO_NUMBER', '+');
+define('TWILIO_SID', '');
+define('AUTH_TOKEN', '');
+
+
+
+//file_put_contents('request.txt', json_encode($_REQUEST));
 
 $message = $_REQUEST['Body'];
 $caller_number = $_REQUEST['From'];
 
-function send_sms($to, $message, $xml = false)
+function send_sms($to, $message, $xml = true)
 {
-  if($xml)
+  if(!$xml)
   {
-    $client = new Services_Twilio($AccountSid, $AuthToken);
+    $client = new Services_Twilio(TWILIO_SID, AUTH_TOKEN);
 
     $sms = $client->account->sms_messages->create(
-      $twilio_number,
+      TWILIO_NUMBER,
       $to, 
       $message
     ); 
@@ -30,7 +31,7 @@ function send_sms($to, $message, $xml = false)
   {
 ?>
 <Response>
-    <Sms from="<?= $twilio_number ?>" to="<?= $to ?>"><?= $message ?></Sms>
+    <Sms from="<?= TWILIO_NUMBER ?>" to="<?= $to ?>"><?= $message ?></Sms>
 </Response>
 <?php    
   }
@@ -52,11 +53,11 @@ if(substr($message, 0, 5) == 'check')
 
   if(!empty($user))
   {
-    send_sms($caller_number, $user['name'].' checked in at '.date('m/d/Y H:i', $user['last_modified']), false);
+    send_sms($caller_number, $user['name'].' last checked in at '.date('m/d/Y H:i', $user['last_modified']), true);
   }
   else
   {
-     send_sms($caller_number, 'Unable to find phone number in registry.', false);   
+     send_sms($caller_number, 'Unable to find phone number in registry.', true);   
   }
 }
 exit;
