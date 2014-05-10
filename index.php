@@ -84,13 +84,11 @@ if (isset($_POST["name"])) {
     <!-- /.container-fluid -->
 </nav>
 
-<section id="contact" style="margin-top: 30px">
+<section id="contact" style="margin-top: 10px">
     <div class="container">
         <div class="row">
             <div class="col-lg-12 text-center">
-                <h2>Register</h2>
-                <!--                <h3>You will receive periodic SMS to update your location.</h3>-->
-                <hr class="star-primary">
+                <h3>Register</h3>
             </div>
         </div>
         <div class="row">
