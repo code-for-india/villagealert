@@ -1,5 +1,19 @@
 <?php
 
+$_MYSQL_DEBUG = "Yes";
+$_MYSQL_USERNAME = "villagealert";
+$_MYSQL_PASSWORD = "villagealert1";
+$_MYSQL_DATABASE = "villagealert";
+
+function mysqldb_connect_full()
+{
+    global $_MYSQL_USERNAME, $_MYSQL_PASSWORD, $_MYSQL_DATABASE;
+    mysqldb_user_login($_MYSQL_USERNAME, $_MYSQL_PASSWORD);
+    mysqldb_connect_to_db($_MYSQL_DATABASE);
+}
+
+mysqldb_connect_full();
+
 function save_phone($phone)
 {
 
