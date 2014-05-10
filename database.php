@@ -30,12 +30,13 @@ function save_contact($phone, $contact)
 function get_phone($phone)
 {
 	// Get the data for the phone number
-	
+
 	return array(
 		'name' => '',
 		'location' => '',
 		'skill' => '',
-		'contact' => ''
+		'contact' => '',
+		'lastupdate' => time()
 	);
 }
 

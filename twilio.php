@@ -1,6 +1,8 @@
 <?php echo '<?' ?>xml version="1.0" encoding="UTF-8"?>
 <?php
 
+include_once('database.php');
+
 $twilio_number = '+';
 $AccountSid = '';
 $AuthToken = '';
@@ -34,8 +36,32 @@ function send_sms($to, $message, $xml = false)
   }
 }
 
+if(substr($message, 0, 5) == 'check')
+{
+  list($command, $phone_number) = preg_split('/ /', $message);
+
+  //$caller = get_phone($phone_number);
+
+  $user = array(
+    'name' => 'Johnny',
+    'location' => '',
+    'skill' => '',
+    'econtact' => '',
+    'last_modified' => time()
+  );
+
+  if(!empty($user))
+  {
+    send_sms($caller_number, $user['name'].' checked in at '.date('m/d/Y H:i', $user['last_modified']), false);
+  }
+  else
+  {
+     send_sms($caller_number, 'Unable to find phone number in registry.', false);   
+  }
+}
+exit;
 $caller = get_phone($caller_number);
-switch($message)
+switch(true)
 {
   case empty($caller['location']):
     save_number($caller_number);
@@ -46,7 +72,7 @@ switch($message)
     save_location($caller_number, $message);
     send_sms($caller_number, 'Can you provide able bodied help (yes/no)? If you have have specific skill, text that.', true);
   break;
-  case empty($caller['contact'])
+  case empty($caller['econtact']):
     save_skill($caller_number, $message);
     send_sms($caller_number, 'Emergency contact #', true);
   break;
