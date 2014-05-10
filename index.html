@@ -24,11 +24,11 @@
       <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
     <![endif]-->
 
-    <script>alert(window.location);window.location='http://villagealert.localhost/index.php';</script>
+    <script>var l = window.location.href; var a = l.indexOf("localhost"); if (a > -1) {window.location='http://villagealert.localhost/index.php';}</script>
 </head>
 
 <body>
-hi
+hello
 </body>
 
 </html>
