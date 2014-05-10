@@ -1,27 +1,6 @@
 <?php
 require_once($_SERVER['DOCUMENT_ROOT'] . "/shared.php");
 
-if (isset($_POST["name"])) {
-    $name = $_POST["name"];
-    $phone = $_POST["phone"];
-    $location = $_POST["location"];
-    $skill = $_POST["skill"];
-    $econtact = $_POST["econtact"];
-
-    // insert a new account
-    DB::insert('user', array(
-        'name' => $name,
-        'phone' => $phone,
-        'location' => $location,
-        'econtact' => $econtact,
-        'skill' => $skill,
-        'state' => "registered",
-    ));
-
-    redirect("/registered.php");
-
-}
-
 ?>
 
 <!DOCTYPE html>
@@ -88,53 +67,15 @@ if (isset($_POST["name"])) {
     <div class="container">
         <div class="row">
             <div class="col-lg-12 text-center">
-                <h2>Register</h2>
+                <h2>Registered!</h2>
                 <!--                <h3>You will receive periodic SMS to update your location.</h3>-->
                 <hr class="star-primary">
             </div>
         </div>
-        <div class="row">
-            <div class="col-lg-8 col-lg-offset-2">
-                <form role="form" method="post">
-                    <div class="row">
-                        <div class="form-group col-xs-12 floating-label-form-group">
-                            <label for="name">Name</label>
-                            <input class="form-control" type="text" name="name" placeholder="Name">
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="form-group col-xs-12 floating-label-form-group">
-                            <label for="name">Phone</label>
-                            <input class="form-control" type="text" name="phone" placeholder="Phone">
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="form-group col-xs-12 floating-label-form-group">
-                            <label for="name">Emergency Contact phone</label>
-                            <input class="form-control" type="text" name="econtact" placeholder="Emergency Contact">
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="form-group col-xs-12 floating-label-form-group">
-                            <label for="name">Current Location</label>
-                            <input class="form-control" type="text" name="location" placeholder="Location">
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="form-group col-xs-12 floating-label-form-group">
-                            <label for="name">Can you help in emergency? Note your skill (e.g. Doctor)</label>
-                            <input class="form-control" type="text" name="skill" placeholder="Skill">
-                        </div>
-                    </div>
-                    <br>
-
-                    <div class="row">
-                        <div class="form-group col-xs-12 text-center">
-                            <button type="submit" class="btn btn-lg btn-success">Register</button>
-                        </div>
-                    </div>
-                </form>
-            </div>
+        <div class="row text-center">
+            <p>You have been registered with the VillageAlert service.</p>
+            <p>You will receive periodic FREE SMS to request an update to your location.</p>
+            <p>Please spread the word and help fellow citizens register to VillageAlert!</p>
         </div>
     </div>
 </section>
