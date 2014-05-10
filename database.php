@@ -12,6 +12,24 @@ function mysqldb_connect_full()
     mysqldb_connect_to_db($_MYSQL_DATABASE);
 }
 
+function mysqldb_user_login($user, $password)
+{
+    if ($dbh = mysql_connect("127.0.0.1", $user, $password)) {
+    } else {
+        die("Error logging into database.<br>");
+        error_log("MYSQL :: User $user not logged in to MYSQL system because: " . mysql_error() . " < br>");
+    }
+}
+
+function mysqldb_connect_to_db($db)
+{
+    if (mysql_select_db($db)) {
+    } else {
+        die("Error connecting to database .<br > ");
+        error_log("MYSQL :: Failed to connect to MYSQl DB $db .<br > ");
+    }
+}
+
 mysqldb_connect_full();
 
 function save_phone($phone)
