@@ -17,6 +17,12 @@ if (isset($_POST["broadcast-warn"])) {
     send_warning($totext, $loc);
     $sent_warning = "Successfully broadcasted warning to $loc area!";
 }
+else if (isset($_POST["broadcast-danger"])) {
+    $totext = $_POST["totext"];
+    $loc = "Rishikesh";
+    send_warning($totext, $loc);
+    $sent_warning = "Successfully broadcasted safety check to $loc area!";
+}
 
 function getAllList($q)
 {
@@ -170,9 +176,34 @@ function genRowHtml($p)
 </div>
 <!-- /.modal -->
 
+<div class="modal fade" id="checkModal">
+    <div class="modal-dialog">
+        <form class="form-inline text-center" role="form" method="POST">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">Broadcast Safety Check</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <input type="text" name="totext" id="totext" autofocus=""
+                               class="form-control" style="width: 100%">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="submit" name="broadcast-danger" class="btn btn-danger">Broadcast Text</button>
+                </div>
+            </div>
+        </form>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+
 <?
 if (!empty($sent_warning)) {
-    echo "<h2>$sent_warning</h2>";
+    echo "<h2 class='text-center'>$sent_warning</h2>";
 }
 ?>
 
