@@ -2,12 +2,11 @@
 <?php
 error_reporting(-1);
 
+include_once('credentials.php');
 include_once('database.php');
 require "../../twilioapi/Twilio.php";
 
-define('TWILIO_NUMBER', '+');
-define('TWILIO_SID', '');
-define('AUTH_TOKEN', '');
+
 
 file_put_contents('request.txt', json_encode($_REQUEST), FILE_APPEND);
 

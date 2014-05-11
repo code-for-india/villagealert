@@ -62,11 +62,11 @@ function save_state($phone, $state, $time = 0)
 
 	if($time != 0)
 	{
-		mysql_query("UPDATE user SET state = \"".$state."\", lastcheckin = \"".$time.\"" WHERE phone = \"".$phone."\"");
+		mysql_query('UPDATE user SET state = "'.$state.'", lastcheckin = "'.$time.'" WHERE phone = "'.$phone.'"');
 	}
 	else
 	{
-		mysql_query("UPDATE user SET state = \"".$state."\" WHERE phone = \"".$phone."\"");
+		mysql_query('UPDATE user SET state = "'.$state.'" WHERE phone = "'.$phone.'"');
 	}
 }
 
