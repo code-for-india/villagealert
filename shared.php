@@ -34,4 +34,15 @@ function redirect($page)
     header("Location: " . $page);
     die();
 }
+
+function send_warning($message, $location)
+{
+  $phones = get_phones($location);
+
+  foreach($phones as $phone)
+  {
+    send_sms($phone['phone'], $message, false);  
+    save_state($phone['phone'], 'No Response');          
+  }
+}
 ?>
