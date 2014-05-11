@@ -35,6 +35,18 @@ function redirect($page)
     die();
 }
 
+function print_r_pre($r)
+{
+    echo "<pre>";
+    print_r($r);
+    echo "</pre>";
+}
+
+function htmlsafe($value)
+{
+    return htmlspecialchars($value, ENT_QUOTES);
+}
+
 function send_warning($message, $location)
 {
   $phones = get_phones($location);

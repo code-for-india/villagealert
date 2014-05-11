@@ -15,7 +15,8 @@ if (isset($_POST["name"])) {
         'location' => $location,
         'econtact' => $econtact,
         'skill' => $skill,
-        'state' => "registered",
+        'state' => "",
+        'reglocation' => "Rishikesh",
     ));
 
     redirect("/registered.php");

@@ -2,6 +2,14 @@ body {
     overflow-x: hidden;
 }
 
+.curvy-border {
+    border-radius: 30px 30px 30px 30px !important;
+}
+
+.admin-page section {
+    padding: 10px;
+}
+
 p {
     font-size: 20px;
 }
