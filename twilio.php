@@ -2,38 +2,8 @@
 <?php
 error_reporting(-1);
 
-include_once('credentials.php');
 include_once('database.php');
-require "Twilio/Twilio.php";
-
-
-
-file_put_contents('request.txt', json_encode($_REQUEST), FILE_APPEND);
-
-$message = $_REQUEST['Body'];
-$caller_number = $_REQUEST['From'];
-
-function send_sms($to, $message, $xml = true)
-{
-  if(!$xml)
-  {
-    $client = new Services_Twilio(TWILIO_SID, AUTH_TOKEN);
-
-    $sms = $client->account->sms_messages->create(
-      TWILIO_NUMBER,
-      $to, 
-      $message
-    ); 
-  }
-  else
-  {
-?>
-<Response>
-    <Sms from="<?= TWILIO_NUMBER ?>" to="<?= $to ?>"><?= $message ?></Sms>
-</Response>
-<?php    
-  }
-}
+include_once('shared.php');
 
 $caller = get_phone($caller_number);
 switch(true)
