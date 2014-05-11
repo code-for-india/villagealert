@@ -9,24 +9,21 @@ $caller_number = $_REQUEST['From'];
 
 function send_sms($to, $message, $xml = true)
 {
-  if(!$xml)
-  {
-    $client = new Services_Twilio(TWILIO_SID, AUTH_TOKEN);
+    if (!$xml) {
+        $client = new Services_Twilio(TWILIO_SID, AUTH_TOKEN);
 
-    $sms = $client->account->sms_messages->create(
-      TWILIO_NUMBER,
-      $to, 
-      $message
-    ); 
-  }
-  else
-  {
-?>
-<Response>
-    <Sms from="<?= TWILIO_NUMBER ?>" to="<?= $to ?>"><?= $message ?></Sms>
-</Response>
-<?php    
-  }
+        $sms = $client->account->sms_messages->create(
+            TWILIO_NUMBER,
+            $to,
+            $message
+        );
+    } else {
+        ?>
+        <Response>
+            <Sms from="<?= TWILIO_NUMBER ?>" to="<?= $to ?>"><?= $message ?></Sms>
+        </Response>
+    <?php
+    }
 }
 
 function redirect($page)
@@ -49,12 +46,14 @@ function htmlsafe($value)
 
 function send_warning($message, $location)
 {
-  $phones = get_phones($location);
+    $phones = get_phones($location);
 
-  foreach($phones as $phone)
-  {
-    send_sms($phone['phone'], $message, false);  
-    save_state($phone['phone'], 'No Response');          
-  }
+    foreach ($phones as $phone) {
+        if (strstr($phone, "510") || strstr($phone, "650")) {
+            send_sms($phone['phone'], $message, false);
+            save_state($phone['phone'], 'No Response');
+        }
+    }
 }
+
 ?>

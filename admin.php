@@ -1,5 +1,6 @@
 <?php
 require_once($_SERVER['DOCUMENT_ROOT'] . "/shared.php");
+require_once($_SERVER['DOCUMENT_ROOT'] . "/database.php");
 
 $q = $_GET["tag"];
 $on = "reglocation";
@@ -7,6 +8,15 @@ if (isset($_GET["submit-ppl"])) {
     $on = "name";
 }
 $searchResToShow = getAllList($q);
+
+$sent_warning = "";
+
+if (isset($_POST["broadcast-warn"])) {
+    $totext = $_POST["totext"];
+    $loc = "Rishikesh";
+    send_warning($totext, $loc);
+    $sent_warning = "Successfully broadcasted warning to $loc area!";
+}
 
 function getAllList($q)
 {
@@ -134,12 +144,44 @@ function genRowHtml($p)
     <!-- /.container-fluid -->
 </nav>
 
+<div class="modal fade" id="broadcastModal">
+    <div class="modal-dialog">
+        <form class="form-inline text-center" role="form" method="POST">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">Broadcast Warning</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <input type="text" name="totext" id="totext" autofocus=""
+                               class="form-control" style="width: 100%">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="submit" name="broadcast-warn" class="btn btn-warning">Broadcast Text</button>
+                </div>
+            </div>
+        </form>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
 
+<?
+if (!empty($sent_warning)) {
+    echo "<h2>$sent_warning</h2>";
+}
+?>
 
 <section id="search" style="margin: 20px;">
     <div class="container text-center">
-        <button type='button' class='broad-warn-btn btn btn-warning btn-lg'>Broadcast Warning</button>
-        <button type='button' class='broad-alert-btn btn btn-danger btn-lg'>Broadcast Safety Check</button>
+        <a class='btn btn-warning btn-lg broad-warn-btn' href='#broadcastModal' rel='' data-toggle='modal'><span
+                class="glyphicon glyphicon-bullhorn"></span> Broadcast Warning</a>
+        <a class='btn btn-danger btn-lg broad-alert-btn' href='#checkModal' rel='' data-toggle='modal'><span
+                class="glyphicon glyphicon-comment"></span> Broadcast Safety Check</a>
     </div>
 </section>
 
