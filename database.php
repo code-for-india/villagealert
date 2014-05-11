@@ -84,10 +84,17 @@ function get_phone($phone)
 	}
 }
 
-function get_phones()
+function get_phones($location = '')
 {
-	// Get the data for the phone number
-	$result = mysql_query("SELECT * FROM user");
+	if(!empty($location))	
+	{
+		// Get the data for the phone number
+		$result = mysql_query('SELECT * FROM user WHERE reglocation LIKE "%'.$location.'%" OR location LIKE "%'.$location.'%"');
+	}
+	else
+	{
+		$result = mysql_query('SELECT * FROM user');
+	}
 
 	$return = array();
 	if(mysql_num_rows($result) > 0)
