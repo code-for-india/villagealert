@@ -14,7 +14,7 @@ function mysqldb_connect_full()
 
 function mysqldb_user_login($user, $password)
 {
-    if ($dbh = mysql_connect("127.0.0.1", $user, $password)) {
+    if ($dbh = mysql_connect("villagealert.org:3400", $user, $password)) {
     } else {
         die("Error logging into database.<br>");
         error_log("MYSQL :: User $user not logged in to MYSQL system because: " . mysql_error() . " < br>");
@@ -34,29 +34,27 @@ mysqldb_connect_full();
 
 function save_phone($phone)
 {
-
+	mysql_query("INSERT INTO user (phone) VALUES (\"".$phone."\")");
 }
 
 function save_name($phone, $name)
 {
-
-
+	mysql_query("UPDATE user SET name = \"".$name."\" WHERE phone = \"".$phone."\"");
 }
 
-function save_location($phone, $name)
+function save_location($phone, $location)
 {
-
+	mysql_query("UPDATE user SET location = \"".$location."\" WHERE phone = \"".$phone."\"");
 }
 
 function save_skill($phone, $skill)
 {
-
-
+	mysql_query("UPDATE user SET skill = \"".$skill."\" WHERE phone = \"".$phone."\"");
 }
 
 function save_contact($phone, $contact)
 {
-
+	mysql_query("UPDATE user SET econtact = \"".$contact."\", lastcheckin = \"".time()."\" WHERE phone = \"".$phone."\"");
 }
 
 function save_state($phone, $state, $time = 0)
@@ -64,30 +62,42 @@ function save_state($phone, $state, $time = 0)
 
 	if($time != 0)
 	{
-		// update last_modified and state
+		mysql_query("UPDATE user SET state = \"".$state."\", lastcheckin = \"".$time.\"" WHERE phone = \"".$phone."\"");
 	}
 	else
 	{
-		// update just the state
+		mysql_query("UPDATE user SET state = \"".$state."\" WHERE phone = \"".$phone."\"");
 	}
 }
 
 function get_phone($phone)
 {
 	// Get the data for the phone number
+	$result = mysql_query("SELECT * FROM user WHERE phone = \"".$phone."\" LIMIT 1");
 
-	return array(
-		'name' => '',
-		'location' => '',
-		'skill' => '',
-		'contact' => '',
-		'lastupdate' => time(),
-		'state' => 'No Response'
-	);
+	if(mysql_num_rows($result) > 0)
+	{
+		while($row = mysql_fetch_assoc($result))
+		{
+			return $row;
+		}
+	}
 }
 
 function get_phones()
 {
-	return array(array('phone' => '6502674831'));
+	// Get the data for the phone number
+	$result = mysql_query("SELECT * FROM user");
+
+	$return = array();
+	if(mysql_num_rows($result) > 0)
+	{
+		while($row = mysql_fetch_assoc($result))
+		{
+			array_push($return,$row);
+		}
+	}
+
+	return $return;
 }
 ?>
