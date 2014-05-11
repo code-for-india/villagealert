@@ -34,7 +34,7 @@ mysqldb_connect_full();
 
 function save_phone($phone)
 {
-	mysql_query("INSERT INTO user (phone) VALUES (\"".$phone."\")");
+	mysql_query("INSERT INTO user (phone, reglocation) VALUES (\"".$phone."\", 'Rishikesh')");
 }
 
 function save_name($phone, $name)
