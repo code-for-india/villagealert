@@ -1,6 +1,5 @@
 <?php echo '<?' ?>xml version="1.0" encoding="UTF-8"?>
 <?php
-error_reporting(-1);
 
 include_once('database.php');
 include_once('shared.php');
