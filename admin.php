@@ -61,8 +61,8 @@ function genRowHtml($p)
     $ret .= "<td>" . $skill . "</td>";
     $ret .= "<td>" . $state . "</td>";
     $ret .= "<td>";
-    $ret .= "<button type='button' class='send-btn btn btn-success btn-sm'>Send Text</button>\n";
-    $ret .= "<button type='button' class='emer-btn btn btn-success btn-sm'>Emergency Contact</button>\n";
+    $ret .= "<button type='button' class='send-btn btn btn-success btn-sm'>Text</button>\n";
+    $ret .= "<button type='button' class='emer-btn btn btn-success btn-sm'>Text Emer Contact</button>\n";
     if (strstr($skill, "doc")) {
         $ret .= "<button type='button' class='dispatch-btn btn btn-success btn-sm'>Dispatch</button>\n";
     }
